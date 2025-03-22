@@ -10,34 +10,34 @@ func TestCleanInput(t *testing.T) {
 		expected []string
 	}{
 		{
+			input:    "  ",
+			expected: []string{},
+		},
+		{
+			input:    "  hello  ",
+			expected: []string{"hello"},
+		},
+		{
 			input:    "  hello  world  ",
 			expected: []string{"hello", "world"},
 		},
 		{
-			input:    "UPPERWORD lowerword",
-			expected: []string{"upperword", "lowerword"},
-		},
-		{
-			input:    "h eLl O WorLD",
-			expected: []string{"h", "ell", "o", "world"},
-		},
-		{
-			input:    "",
-			expected: []string{},
+			input:    "  HellO  World  ",
+			expected: []string{"hello", "world"},
 		},
 	}
 
 	for _, c := range cases {
 		actual := cleanInput(c.input)
 		if len(actual) != len(c.expected) {
-			t.Errorf("Error length! Expected:%d || Actual: %d", len(c.expected), len(actual))
+			t.Errorf("lengths don't match: '%v' vs '%v'", actual, c.expected)
+			continue
 		}
 		for i := range actual {
 			word := actual[i]
 			expectedWord := c.expected[i]
-
 			if word != expectedWord {
-				t.Errorf("Incorect word! Expected:%s || Actual: %s", expectedWord, word)
+				t.Errorf("cleanInput(%v) == %v, expected %v", c.input, actual, c.expected)
 			}
 		}
 	}
