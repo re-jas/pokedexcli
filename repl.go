@@ -7,12 +7,11 @@ import (
 	"strings"
 
 	"github.com/re-jas/pokedexcli/internal/pokeapi"
-	"github.com/re-jas/pokedexcli/internal/pokecache"
 )
 
 type config struct {
 	pokeapiClient    pokeapi.Client
-	pokeCache        pokecache.Cache
+	caughtPokemon    map[string]pokeapi.Pokemon
 	nextLocationsURL *string
 	prevLocationsURL *string
 }
@@ -83,6 +82,11 @@ func getCommands() map[string]cliCommand {
 			name:        "explore",
 			description: "Display all the Pokemon located in area",
 			callback:    commandExplore,
+		},
+		"catch": {
+			name:        "catch",
+			description: "Try to catch pokemon",
+			callback:    commandCatch,
 		},
 		"exit": {
 			name:        "exit",
